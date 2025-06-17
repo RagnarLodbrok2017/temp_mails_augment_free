@@ -66,6 +66,9 @@ class FreeAugmentCodeGUI:
         # Setup temporary email tab
         self.setup_temp_email_tab(email_frame)
 
+        # Add footer
+        self.setup_footer()
+
     def setup_cleanup_tab(self, main_frame):
         
         """Setup the cleanup tools tab"""
@@ -763,6 +766,42 @@ High Reliability Services: {stats['high_reliability_services']}"""
 
         # Close button
         ttk.Button(main_frame, text="Close", command=info_window.destroy).pack(pady=(15, 0))
+
+    def setup_footer(self):
+        """Setup footer with developer information"""
+        import webbrowser
+
+        # Create footer frame at the bottom of the main window
+        footer_frame = ttk.Frame(self.root)
+        footer_frame.grid(row=1, column=0, sticky=(tk.W, tk.E), padx=10, pady=(0, 5))
+        footer_frame.columnconfigure(0, weight=1)
+
+        # Developer info with clickable link
+        footer_text = "Developed by "
+        dev_name = "AhmedElnakieb"
+
+        # Create a frame to hold the footer content
+        content_frame = ttk.Frame(footer_frame)
+        content_frame.pack()
+
+        # Add the "Developed by" text
+        ttk.Label(content_frame, text=footer_text,
+                 font=('Arial', 9), foreground='gray').pack(side=tk.LEFT)
+
+        # Add clickable developer name
+        dev_label = ttk.Label(content_frame, text=dev_name,
+                             font=('Arial', 9, 'underline'),
+                             foreground='blue', cursor='hand2')
+        dev_label.pack(side=tk.LEFT)
+
+        # Bind click event to open GitHub
+        def open_github(event):
+            webbrowser.open('https://github.com/RagnarLodbrok2017')
+
+        dev_label.bind('<Button-1>', open_github)
+
+        # Update grid configuration to accommodate footer
+        self.root.rowconfigure(1, weight=0)
 
 
 def main():
